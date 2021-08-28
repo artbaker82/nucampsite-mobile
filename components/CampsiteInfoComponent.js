@@ -28,8 +28,9 @@ class CampsiteInfo extends Component {
   render() {
     //this comes from the onPress prop in the Directory component, it passes props through props.navigation
     const campsiteId = this.props.navigation.getParam("campsiteId");
+    //filter through all campsites against the one that was pressed in the directory component
     const campsite = this.state.campsites.filter((campsite) => campsite.id === campsiteId)[0];
-
+    //pass that filtered campsite to campsite info component on this page
     return <RenderCampsite campsite={campsite} />;
   }
 }
