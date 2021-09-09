@@ -99,10 +99,16 @@ class CampsiteInfo extends Component {
   render() {
     const RenderCampsite = (props) => {
       const { campsite } = props;
+      const view = React.createRef();
 
       const recognizeDrag = ({ dx }) => (dx < -200 ? true : false);
       const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
+        onPanResponderGrant: () => {
+          view.current
+            .rubberBand(1000)
+            .then((endState) => console.log(endState.finished ? "finished" : "cancelled"));
+        },
         onPanResponderEnd: (e, gestureState) => {
           console.log("pan responder end", gestureState);
           if (recognizeDrag(gestureState)) {
@@ -135,6 +141,7 @@ class CampsiteInfo extends Component {
             animation="fadeInDown"
             duration={2000}
             delay={1000}
+            ref={view}
             {...panResponder.panHandlers}
           >
             <Card featuredTitle={campsite.name} image={{ uri: baseUrl + campsite.image }}>
