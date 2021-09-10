@@ -102,6 +102,7 @@ class CampsiteInfo extends Component {
       const view = React.createRef();
 
       const recognizeDrag = ({ dx }) => (dx < -200 ? true : false);
+      const recognizeComment = ({ dx }) => (dx > 200 ? true : false);
       const panResponder = PanResponder.create({
         onStartShouldSetPanResponder: () => true,
         onPanResponderGrant: () => {
@@ -131,6 +132,9 @@ class CampsiteInfo extends Component {
               ],
               { cancelable: false }
             );
+          } else if (recognizeComment(gestureState)) {
+            console.log("sup");
+            this.toggleModal();
           }
           return true;
         },
